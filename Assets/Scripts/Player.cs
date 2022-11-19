@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0)) {
             //Debug.Log("Clique Bot�o esquerdo down");
-            gameObject.transform.Find("ChopTreeCollider").GetComponent<BoxCollider2Da>().enabled = true;
+            gameObject.transform.Find("ChopTreeCollider").GetComponent<BoxCollider2D>().enabled = true;
         }
         if (Input.GetMouseButtonUp(0))
         {
