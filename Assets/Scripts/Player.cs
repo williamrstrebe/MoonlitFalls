@@ -10,10 +10,13 @@ public class Player : MonoBehaviour
     private Rigidbody2D rig;
     private Vector2 direction;
 
+
     private void Start()
     {
         rig = GetComponent<Rigidbody2D>();
     }
+
+
 
     private void Update()
     {
@@ -23,20 +26,21 @@ public class Player : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.LeftShift))
             speed /= runMultiplier;
 
-        if (Input.GetMouseButtonDown(0)) {
-            //Debug.Log("Clique Bot�o esquerdo down");
+        if (Input.GetMouseButtonDown(0))
+        {
+            //Debug.Log("Clique Botao esquerdo down");
             gameObject.transform.Find("ChopTreeCollider").GetComponent<BoxCollider2D>().enabled = true;
         }
         if (Input.GetMouseButtonUp(0))
         {
-            //Debug.Log("Clique Bot�o esquerdo Up");
+            //Debug.Log("Clique Botao esquerdo Up");
             gameObject.transform.Find("ChopTreeCollider").GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 
     private void FixedUpdate()
     {
-            rig.MovePosition(rig.position + direction * speed * Time.fixedDeltaTime);
+        rig.MovePosition(rig.position + direction * speed * Time.fixedDeltaTime);
     }
 
 }
