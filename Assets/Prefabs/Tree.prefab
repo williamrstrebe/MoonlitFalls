@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 5251227063720063801}
   m_Layer: 0
   m_Name: Tree
-  m_TagString: Tree
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -174,7 +174,7 @@ MonoBehaviour:
   - {x: 0.25, y: -0.25, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 27882
+  m_InstanceId: -1468
 --- !u!61 &5251227063720063802
 BoxCollider2D:
   m_ObjectHideFlags: 0

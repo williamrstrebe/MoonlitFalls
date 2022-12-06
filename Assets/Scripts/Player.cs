@@ -20,11 +20,13 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        // Capturar Direção de Movimento (pelo input)
         direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+
         if (Input.GetKeyDown(KeyCode.LeftShift))
-            speed *= runMultiplier;
+            speed *= runMultiplier; // Acelerar
         if (Input.GetKeyUp(KeyCode.LeftShift))
-            speed /= runMultiplier;
+            speed /= runMultiplier; // Desacelerar
 
         if (Input.GetMouseButtonDown(0))
         {
