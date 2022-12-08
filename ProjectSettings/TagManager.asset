@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ChoppingArea
   - Water
+  - DugArea
   layers:
   - Default
   - TransparentFX

@@ -7,11 +7,6 @@ public class Tree : MonoBehaviour {
     private int hitpoints = 3;
     [SerializeField] private ParticleSystem particles;
 
-    public void OnHit() {
-        Debug.Log("que isso");
-
-    }
-
     private void OnTriggerEnter2D(Collider2D collision) {
 
         if (collision.CompareTag("ChoppingArea") && hitpoints > 0) {
