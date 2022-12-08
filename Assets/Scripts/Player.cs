@@ -11,29 +11,36 @@ public class Player : MonoBehaviour
     private Vector2 direction;
 
     private int currentSelected;
-
+    private string selectedEquipCollider;
 
     private void Start()
     {
         rig = GetComponent<Rigidbody2D>();
         currentSelected = 1;
+        selectedEquipCollider = "ChopTreeCollider";
     }
 
 
 
     private void Update()
     {
-        // Capturar Direção de Movimento (pelo input)
+        // Capturar Direï¿½ï¿½o de Movimento (pelo input)
         direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-
+        
         if (Input.GetKeyDown(KeyCode.Alpha1)) { 
             Debug.Log("Equipando machado");
             currentSelected = 1;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            selectedEquipCollider = "ChopTreeCollider";
+        } else if (Input.GetKeyDown(KeyCode.Alpha2)) {
             Debug.Log("Equipando enxada");
             currentSelected = 2;
+            selectedEquipCollider = "DugAreaCollider";
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Debug.Log("Equipando regador");
+            currentSelected = 3;
+            selectedEquipCollider = "WaterCollectCollider";
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -43,19 +50,25 @@ public class Player : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0))
         {
+            gameObject.transform.Find(selectedEquipCollider).gameObject.GetComponent<BoxCollider2D>().enabled = true;
             //Debug.Log("Clique Botao esquerdo down + "+ currentSelectEquip);
-            if(currentSelected == 1)
-            gameObject.transform.Find("ChopTreeCollider").GetComponent<BoxCollider2D>().enabled = true;
-            else
-            gameObject.transform.Find("DugAreaCollider").GetComponent<BoxCollider2D>().enabled = true;
+            //if (currentSelected == 1)
+            //gameObject.transform.Find("ChopTreeCollider").GetComponent<BoxCollider2D>().enabled = true;
+            //else if (currentSelected == 2)
+            //    gameObject.transform.Find("DugAreaCollider").GetComponent<BoxCollider2D>().enabled = true;
+            //else if (currentSelected == 3)
+            //    gameObject.transform.Find("WaterCollectCollider").GetComponent<BoxCollider2D>().enabled = true;
         }
         if (Input.GetMouseButtonUp(0))
         {
+            gameObject.transform.Find(selectedEquipCollider).gameObject.GetComponent<BoxCollider2D>().enabled = false;
             //Debug.Log("Clique Botao esquerdo Up");
-            if(currentSelected == 1)
-            gameObject.transform.Find("ChopTreeCollider").GetComponent<BoxCollider2D>().enabled = false;
-            else
-            gameObject.transform.Find("DugAreaCollider").GetComponent<BoxCollider2D>().enabled = false;
+            //if(currentSelected == 1)
+            //    gameObject.transform.Find("ChopTreeCollider").GetComponent<BoxCollider2D>().enabled = false;
+            //else if (currentSelected == 2)
+            //    gameObject.transform.Find("DugAreaCollider").GetComponent<BoxCollider2D>().enabled = false;
+            //else if (currentSelected == 3)
+            //    gameObject.transform.Find("WaterCollectCollider").GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class FertileSlot : MonoBehaviour
 {
 
-    public SpriteRenderer renderer;
+    public SpriteRenderer rendererObj;
     private int status; // 0 untilled, 1 tilled, 2 seeded, 3 harvestable, 4 ruined
     public Sprite dug;
     public Sprite dugWatered;
@@ -16,7 +16,7 @@ public class FertileSlot : MonoBehaviour
 
     private void Start() {
         status = 0;
-        hitpoints = 3;
+        hitpoints = 1;
     }
 
 
@@ -30,8 +30,11 @@ public class FertileSlot : MonoBehaviour
                 hitpoints--;
                 if (hitpoints == 0) {
                     status = 1;
-                    renderer.sprite = dug;
+                    rendererObj.sprite = dug;
                 }
+            }
+            else if(status == 1) {
+                Debug.Log("Esse slot já foi preparado");
             }
         }
 
