@@ -47,10 +47,23 @@ public class Player : MonoBehaviour
             speed *= runMultiplier; // Acelerar
         if (Input.GetKeyUp(KeyCode.LeftShift))
             speed /= runMultiplier; // Desacelerar
-        
+
         if (Input.GetMouseButtonDown(0))
         {
-            gameObject.transform.Find(selectedEquipCollider).gameObject.GetComponent<BoxCollider2D>().enabled = true;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+
+            if (hit.collider != null)
+            {
+                Debug.Log("CLICKED " + hit.collider.name);
+                if (hit.collider.name == "Tree") {
+                    hit.transform.GetComponent<Tree>().Hit();
+                }
+
+            }
+
+
+            //gameObject.transform.Find(selectedEquipCollider).gameObject.GetComponent<BoxCollider2D>().enabled = true;
             //Debug.Log("Clique Botao esquerdo down + "+ currentSelectEquip);
             //if (currentSelected == 1)
             //gameObject.transform.Find("ChopTreeCollider").GetComponent<BoxCollider2D>().enabled = true;
@@ -59,6 +72,7 @@ public class Player : MonoBehaviour
             //else if (currentSelected == 3)
             //    gameObject.transform.Find("WaterCollectCollider").GetComponent<BoxCollider2D>().enabled = true;
         }
+
         if (Input.GetMouseButtonUp(0))
         {
             gameObject.transform.Find(selectedEquipCollider).gameObject.GetComponent<BoxCollider2D>().enabled = false;

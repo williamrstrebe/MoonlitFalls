@@ -10,14 +10,19 @@ public class Tree : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision) {
 
         if (collision.CompareTag("ChoppingArea") && hitpoints > 0) {
-            Debug.Log("Detectou colisão");
-            particles.Play();
-            hitpoints--;
+            Hit();
+        }
+    }
 
-            if (hitpoints <= 0) { 
-                Debug.Log("Arvore destruida");
-                Destroy(gameObject);
-            }
+    public void Hit() {
+        Debug.Log("Detectou colisão");
+        particles.Play();
+        hitpoints--;
+
+        if (hitpoints <= 0)
+        {
+            Debug.Log("Arvore destruida");
+            Destroy(gameObject);
         }
     }
 }
