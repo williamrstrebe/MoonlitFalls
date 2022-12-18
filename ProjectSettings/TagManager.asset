@@ -6,6 +6,8 @@ TagManager:
   tags:
   - ChoppingArea
   - Water
+  - DugArea
+  - WaterCollect
   layers:
   - Default
   - TransparentFX
