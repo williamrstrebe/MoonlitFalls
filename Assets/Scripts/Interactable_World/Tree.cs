@@ -6,19 +6,21 @@ public class Tree : MonoBehaviour {
 
     private int hitpoints = 3;
     [SerializeField] private ParticleSystem particles;
-    private bool available = true; // setar pra false quando corrigir
+    private bool available = false; // setar pra false quando corrigir
     private void OnTriggerEnter2D(Collider2D collision) {
 
-        if (collision.CompareTag("ChoppingArea") && hitpoints > 0) {
+        if (collision.CompareTag("Player") && hitpoints > 0) {
             //   Hit();
+            Debug.Log("Player entrou do Range de uma árvore");
             available = true;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
 
-        if (collision.CompareTag("ChoppingArea") && hitpoints > 0)
+        if (collision.CompareTag("Player") && hitpoints > 0)
         {
+            Debug.Log("Player saiu do Range de uma árvore");
             available = false;
         }
     }
