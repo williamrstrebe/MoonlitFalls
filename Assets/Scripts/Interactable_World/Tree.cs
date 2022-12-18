@@ -6,23 +6,47 @@ public class Tree : MonoBehaviour {
 
     private int hitpoints = 3;
     [SerializeField] private ParticleSystem particles;
-
+    private bool available = true; // setar pra false quando corrigir
     private void OnTriggerEnter2D(Collider2D collision) {
 
         if (collision.CompareTag("ChoppingArea") && hitpoints > 0) {
-            Hit();
+            //   Hit();
+            available = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+
+        if (collision.CompareTag("ChoppingArea") && hitpoints > 0)
+        {
+            available = false;
         }
     }
 
-    public void Hit() {
-        Debug.Log("Detectou colisão");
-        particles.Play();
-        hitpoints--;
+    public int Hit() {
 
-        if (hitpoints <= 0)
+        int hit = 0;
+
+        if (available)
         {
-            Debug.Log("Arvore destruida");
-            Destroy(gameObject);
+            hit = 1;
+            Debug.Log("Detectou colisão");
+            particles.Play();
+            hitpoints--;
+
+            if (hitpoints <= 0)
+            {
+                Debug.Log("Arvore destruida");
+                Destroy(gameObject);
+            }
         }
+        else 
+        {
+            hit = -1;
+            Debug.Log("Detectou clique, mas fora do alcance");
+            
+        }
+
+        return hit;
     }
 }
