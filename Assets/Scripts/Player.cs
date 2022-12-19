@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("Caminho do projeto" + Application.dataPath);
         lockForAnim = false;
         rig = GetComponent<Rigidbody2D>();
         currentSelected = 1;
@@ -27,7 +28,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        // Capturar Dire��o de Movimento (pelo input)
+        // Capturar Direcao de Movimento (pelo input)
         direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
         
         if (Input.GetKeyDown(KeyCode.Alpha1)) { 

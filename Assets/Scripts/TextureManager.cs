@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class TextureManager : MonoBehaviour
@@ -148,126 +149,151 @@ public Sprite MakeSprite(Texture2D texture)
     // rend.sprite = newSprite;
 }
 
-void Start()
-{
-    rend = GetComponent<SpriteRenderer>();
+    public void SaveTextureToFile(Texture2D texture, string fileName)
+    {
+        string file_path = Application.dataPath+"/Resources/"+fileName;
+        Debug.Log(file_path);
+        byte[] fileData = texture.EncodeToPNG();
+        using (var fs = new FileStream(file_path, FileMode.Create, FileAccess.Write))
+        {
+            fs.Write(fileData, 0, fileData.Length);
+        }
+    }
 
-    tex = MakeTexture(textureArray, colorArray);
+    void Start()
+    {
+        rend = GetComponent<SpriteRenderer>();
+
+        //Texture2D headTexture = Resources.Load<Texture2D>("Test/Head");
+        //Texture2D eyesTexture = Resources.Load<Texture2D>("Test/Eyes");
+        //Texture2D mouthTexture = Resources.Load<Texture2D>("Test/Mouth");
+        //Texture2D[] loadedTextures = new Texture2D[] { headTexture, eyesTexture, mouthTexture};
+        Texture2D base = Resources.Load<Texture2D>("Test/Sprite/Female/Head");
+        Texture2D cabelo = Resources.Load<Texture2D>("Test/Sprite/Female/Eyes");
+        Texture2D inferior = Resources.Load<Texture2D>("Test/Sprite/Female/Mouth");
+        Texture2D superior = Resources.Load<Texture2D>("Test/Sprite/Female/Mouth");
+        Texture2D[] loadedTextures = new Texture2D[] { headTexture, eyesTexture, mouthTexture };
+
+        tex = MakeTexture(loadedTextures, colorArray);
+        
         // assign procedural sprite to sprite renderer.sprite
-        rend.sprite = MakeSprite(tex);
+        Sprite finalSprite = MakeSprite(tex);
+        rend.sprite = finalSprite;
+        
+        //Debug.Log("save to disk comentado");
+        //SaveTextureToFile(finalSprite.texture, "SpriteTeste.png");
+        SaveTextureToFile(finalSprite.texture, "FemaleIdle.png");
 
-}
-
-
-public void firstMethod()
-{
-    rend = GetComponent<SpriteRenderer>();
-
-    //create a texture
-    Texture2D tex = new Texture2D(96, 96);
-
-    for (int x = 0; x < tex.width; x++)
-    {
-        for (int y = 0; y < tex.height; y++)
-        {
-            tex.SetPixel(x, y, Color.red);
-        }
     }
-    tex.Apply();
 
-    //create a sprite from texture
-    Sprite newSprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one * 0.5f);
 
-    // assign procedural sprite to sprite renderer.sprite
-    rend.sprite = newSprite;
-}
+//public void firstMethod()
+//{
+//    rend = GetComponent<SpriteRenderer>();
 
-public void secondMethod()
-{
+//    //create a texture
+//    Texture2D tex = new Texture2D(96, 96);
 
-    rend = GetComponent<SpriteRenderer>();
+//    for (int x = 0; x < tex.width; x++)
+//    {
+//        for (int y = 0; y < tex.height; y++)
+//        {
+//            tex.SetPixel(x, y, Color.red);
+//        }
+//    }
+//    tex.Apply();
 
-    //create a texture
-    Texture2D tex = new Texture2D(96, 96);
-    Color[] colorArray = new Color[tex.width * tex.height];
+//    //create a sprite from texture
+//    Sprite newSprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one * 0.5f);
 
-    for (int x = 0; x < tex.width; x++)
-    {
-        for (int y = 0; y < tex.height; y++)
-        {
-            colorArray[x + (y * tex.width)] = Color.red;
-        }
-    }
-    tex.SetPixels(colorArray);
-    tex.Apply();
+//    // assign procedural sprite to sprite renderer.sprite
+//    rend.sprite = newSprite;
+//}
 
-    //create a sprite from texture
-    Sprite newSprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one * 0.5f);
+//public void secondMethod()
+//{
 
-    // assign procedural sprite to sprite renderer.sprite
-    rend.sprite = newSprite;
-}
+//    rend = GetComponent<SpriteRenderer>();
 
-private void ThirdMethod()
-{
-    rend = GetComponent<SpriteRenderer>();
+//    //create a texture
+//    Texture2D tex = new Texture2D(96, 96);
+//    Color[] colorArray = new Color[tex.width * tex.height];
 
-    //create a texture
-    Texture2D tex = new Texture2D(96, 96);
-    Color[] colorArray = new Color[tex.width * tex.height];
+//    for (int x = 0; x < tex.width; x++)
+//    {
+//        for (int y = 0; y < tex.height; y++)
+//        {
+//            colorArray[x + (y * tex.width)] = Color.red;
+//        }
+//    }
+//    tex.SetPixels(colorArray);
+//    tex.Apply();
 
-    for (int x = 0; x < tex.width; x++)
-    {
-        for (int y = 0; y < tex.height; y++)
-        {
-            colorArray[x + (y * tex.width)] = Color.Lerp(Color.black, Color.white, (float)y / (float)tex.width);
-        }
-    }
-    tex.SetPixels(colorArray);
-    tex.Apply();
+//    //create a sprite from texture
+//    Sprite newSprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one * 0.5f);
 
-    tex.wrapMode = TextureWrapMode.Clamp;
-    tex.filterMode = FilterMode.Point;
+//    // assign procedural sprite to sprite renderer.sprite
+//    rend.sprite = newSprite;
+//}
 
-    //create a sprite from texture
-    Sprite newSprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one * 0.5f);
+//private void ThirdMethod()
+//{
+//    rend = GetComponent<SpriteRenderer>();
 
-    // assign procedural sprite to sprite renderer.sprite
-    rend.sprite = newSprite;
-}
+//    //create a texture
+//    Texture2D tex = new Texture2D(96, 96);
+//    Color[] colorArray = new Color[tex.width * tex.height];
 
-private void ForthMethod()
-{
-    rend = GetComponent<SpriteRenderer>();
+//    for (int x = 0; x < tex.width; x++)
+//    {
+//        for (int y = 0; y < tex.height; y++)
+//        {
+//            colorArray[x + (y * tex.width)] = Color.Lerp(Color.black, Color.white, (float)y / (float)tex.width);
+//        }
+//    }
+//    tex.SetPixels(colorArray);
+//    tex.Apply();
 
-    //create a texture
-    Texture2D tex = new Texture2D(src.width, src.height);
-    Color[] colorArray = new Color[tex.width * tex.height];
+//    tex.wrapMode = TextureWrapMode.Clamp;
+//    tex.filterMode = FilterMode.Point;
 
-    Color[] srcArray = src.GetPixels();
+//    //create a sprite from texture
+//    Sprite newSprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one * 0.5f);
 
-    for (int x = 0; x < tex.width; x++)
-    {
-        for (int y = 0; y < tex.height; y++)
-        {
-            int pixelIndex = x + (y * tex.width);
-            Color srcPixel = srcArray[pixelIndex];
-            colorArray[pixelIndex] = srcPixel;
-        }
-    }
-    tex.SetPixels(colorArray);
-    tex.Apply();
+//    // assign procedural sprite to sprite renderer.sprite
+//    rend.sprite = newSprite;
+//}
 
-    tex.wrapMode = TextureWrapMode.Clamp;
-    tex.filterMode = FilterMode.Point;
+//private void ForthMethod()
+//{
+//    rend = GetComponent<SpriteRenderer>();
 
-    //create a sprite from texture
-    Sprite newSprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one * 0.5f);
+//    //create a texture
+//    Texture2D tex = new Texture2D(src.width, src.height);
+//    Color[] colorArray = new Color[tex.width * tex.height];
 
-    // assign procedural sprite to sprite renderer.sprite
-    rend.sprite = newSprite;
-}
+//    Color[] srcArray = src.GetPixels();
 
-    
+//    for (int x = 0; x < tex.width; x++)
+//    {
+//        for (int y = 0; y < tex.height; y++)
+//        {
+//            int pixelIndex = x + (y * tex.width);
+//            Color srcPixel = srcArray[pixelIndex];
+//            colorArray[pixelIndex] = srcPixel;
+//        }
+//    }
+//    tex.SetPixels(colorArray);
+//    tex.Apply();
+
+//    tex.wrapMode = TextureWrapMode.Clamp;
+//    tex.filterMode = FilterMode.Point;
+
+//    //create a sprite from texture
+//    Sprite newSprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one * 0.5f);
+
+//    // assign procedural sprite to sprite renderer.sprite
+//    rend.sprite = newSprite;
+//}
 }
 
