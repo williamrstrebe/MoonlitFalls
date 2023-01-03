@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private Vector2 direction;
 
     private int currentSelected;
+    public int GetSelected() { return currentSelected; }
     private string selectedEquipCollider;
 
     private bool lockForAnim;
@@ -30,12 +31,15 @@ public class Player : MonoBehaviour
     {
         // Capturar Direcao de Movimento (pelo input)
         direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-        
-        if (Input.GetKeyDown(KeyCode.Alpha1)) { 
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
             Debug.Log("Equipando machado");
             currentSelected = 1;
             selectedEquipCollider = "ChopTreeCollider";
-        } else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
             Debug.Log("Equipando enxada");
             currentSelected = 2;
             selectedEquipCollider = "DugAreaCollider";
@@ -59,7 +63,7 @@ public class Player : MonoBehaviour
                 MouseAction();
             else
                 Debug.Log("Locked for Animation");
-            
+
 
 
             //gameObject.transform.Find(selectedEquipCollider).gameObject.GetComponent<BoxCollider2D>().enabled = true;
@@ -84,12 +88,23 @@ public class Player : MonoBehaviour
             //    gameObject.transform.Find("WaterCollectCollider").GetComponent<BoxCollider2D>().enabled = false;
         }
 
-        if (currentSelected == 1) { 
-        // só pra tirar o warning
+        if (currentSelected == 1)
+        {
+            // só pra tirar o warning
         }
     }
 
-    private void MouseAction() {
+    public void Save()
+    {
+        SaveLoadManager.save(this);
+    }
+
+    public void Load() {
+        this.currentSelected = SaveLoadManager.LoadPlayer();
+    }
+
+    private void MouseAction()
+    {
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
@@ -99,8 +114,10 @@ public class Player : MonoBehaviour
             Debug.Log("CLICKED " + hit.collider.name);
 
             if (hit.collider.name == "Tree")
-                if (currentSelected == 1) {
-                    if (hit.transform.GetComponent<Tree>().Hit() == 1) { //se colidiu e estava no alcance, retorna 1
+                if (currentSelected == 1)
+                {
+                    if (hit.transform.GetComponent<Tree>().Hit() == 1)
+                    { //se colidiu e estava no alcance, retorna 1
                         // descomentar quando tiver animação
                         // controla para nao dar varios cliques seguidos
                         //this.lockForAnim = true; // deve ser setado pra false no ultimo frame do Animator

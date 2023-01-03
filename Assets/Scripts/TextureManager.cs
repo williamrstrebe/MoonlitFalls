@@ -20,7 +20,7 @@ public class TextureManager : MonoBehaviour
         Color[] clearPixels = new Color[width * height];
 
         clearTex.SetPixels(clearPixels);
-
+        
         return clearTex;
     }
 
@@ -102,7 +102,7 @@ public class TextureManager : MonoBehaviour
                     }
                     else if (srcPixel.a > 0)
                     {
-                        //colorArray[pixelIndex] = NormalBlend(colorArray[pixelIndex], srcPixel);
+                        colorArray[pixelIndex] = NormalBlend(colorArray[pixelIndex], srcPixel);
                     }
                 }
             }
@@ -159,7 +159,7 @@ public Sprite MakeSprite(Texture2D texture)
             fs.Write(fileData, 0, fileData.Length);
         }
     }
-
+      
     void Start()
     {
         rend = GetComponent<SpriteRenderer>();
@@ -168,14 +168,15 @@ public Sprite MakeSprite(Texture2D texture)
         //Texture2D eyesTexture = Resources.Load<Texture2D>("Test/Eyes");
         //Texture2D mouthTexture = Resources.Load<Texture2D>("Test/Mouth");
         //Texture2D[] loadedTextures = new Texture2D[] { headTexture, eyesTexture, mouthTexture};
-        Texture2D base = Resources.Load<Texture2D>("Test/Sprite/Female/Head");
+        Texture2D baseSprite = Resources.Load<Texture2D>("Test/Sprite/Female/Head");
         Texture2D cabelo = Resources.Load<Texture2D>("Test/Sprite/Female/Eyes");
         Texture2D inferior = Resources.Load<Texture2D>("Test/Sprite/Female/Mouth");
         Texture2D superior = Resources.Load<Texture2D>("Test/Sprite/Female/Mouth");
-        Texture2D[] loadedTextures = new Texture2D[] { headTexture, eyesTexture, mouthTexture };
+        //Texture2D[] loadedTextures = new Texture2D[] { headTexture, eyesTexture, mouthTexture };
+        Texture2D[] loadedTextures = new Texture2D[] { baseSprite };
 
         tex = MakeTexture(loadedTextures, colorArray);
-        
+                
         // assign procedural sprite to sprite renderer.sprite
         Sprite finalSprite = MakeSprite(tex);
         rend.sprite = finalSprite;
