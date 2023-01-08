@@ -64,6 +64,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Madeira
   quantity: 5
+  sprite: {fileID: 21300000, guid: c92e9a33fc843024ab5ccdca670505fe, type: 3}
 --- !u!1 &5383308920435477755
 GameObject:
   m_ObjectHideFlags: 0

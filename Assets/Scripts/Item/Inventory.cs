@@ -4,15 +4,33 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public List<Item> slots;
 
-    public void AddToInventory(string name, int quantity)
+    public List<Item> slots;
+    private int maxSlots = 0;
+
+    private void Start()
+    {
+
+    }
+    private void Update()
+    {
+
+    }
+
+    public bool AddToInventory(string name, int quantity)
     {
         if (slots == null)
         {
             //Debug.Log("instanciou");
             slots = new List<Item>(); // não está aparecendo no inspector !?!
         }
+        
+        if (slots.Count >= maxSlots)
+        {
+            Debug.Log("Inventáriio cheio");
+            return false;
+        }
+
 
 
         int i = 0;
@@ -25,13 +43,14 @@ public class Inventory : MonoBehaviour
             if (item.itemName == name)
             {
                 item.quantity += quantity;
-                return;
+                return true;
             }
         }
 
         Debug.Log("chegou no inv");
         slots.Add(new Item(name, quantity));
         Debug.Log("slots agora tem " + slots.Count + "item (s)!");
+        return true;
     }
 
 

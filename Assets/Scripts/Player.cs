@@ -16,13 +16,21 @@ public class Player : MonoBehaviour
 
     private bool lockForAnim;
 
+    public UIController UIController;
+
+
     private void Start()
     {
+        //UIController = GetComponent<UIController>();
+        Debug.Log(UIController);
+
         Debug.Log("Caminho do projeto" + Application.dataPath);
         lockForAnim = false;
         rig = GetComponent<Rigidbody2D>();
         currentSelected = 1;
         selectedEquipCollider = "ChopTreeCollider";
+
+        UIController.ChangeText("CurrentSelect",currentSelected.ToString());
     }
 
 
@@ -37,24 +45,32 @@ public class Player : MonoBehaviour
             Debug.Log("Equipando machado");
             currentSelected = 1;
             selectedEquipCollider = "ChopTreeCollider";
+            this.UIController.ChangeText("CurrentSelect", currentSelected.ToString());
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             Debug.Log("Equipando enxada");
             currentSelected = 2;
             selectedEquipCollider = "DugAreaCollider";
+            this.UIController.ChangeText("CurrentSelect", currentSelected.ToString());
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             Debug.Log("Equipando regador");
             currentSelected = 3;
             selectedEquipCollider = "WaterCollectCollider";
+            this.UIController.ChangeText("CurrentSelect", currentSelected.ToString());
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
             speed *= runMultiplier; // Acelerar
         if (Input.GetKeyUp(KeyCode.LeftShift))
             speed /= runMultiplier; // Desacelerar
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            Debug.Log("H pressed. Current selected is "+ currentSelected);
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -97,10 +113,14 @@ public class Player : MonoBehaviour
     public void Save()
     {
         SaveLoadManager.save(this);
+        Debug.Log("Game saved");
     }
 
-    public void Load() {
+    public void Load()
+    {
         this.currentSelected = SaveLoadManager.LoadPlayer();
+        this.UIController.ChangeText("CurrentSelect", currentSelected.ToString());
+        Debug.Log("Game loaded");
     }
 
     private void MouseAction()
